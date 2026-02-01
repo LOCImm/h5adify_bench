@@ -1,4 +1,4 @@
-Initial installation
+## Initial installation
 
 ```
 bash scripts/install.sh /absolute/path/to/h5adify_v0.0.7_final.zip
