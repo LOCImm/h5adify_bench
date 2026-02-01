@@ -13,25 +13,25 @@ source .venv/bin/activate
 python scripts/part1_download_doi20.py --doi-config configs/doi20.yaml
 ```
 
-Run the part one
+### Run the part one
 
 ```
 python scripts/part1_make_gold.py --manifest data/doi20/manifest.json --out gold/doi20_gold.json --use-small
 ```
 
-Run llm benchmark
+### Run llm benchmark
 
 ```
 python scripts/part1_run_benchmark.py --use-llm --prompt-name metadata_harmonize_v1_default --save-h5ad --prefer-small
 ```
 
-Run deterministic (no benchmark)
+### Run deterministic (no benchmark)
 
 ```
 python scripts/part1_run_benchmark.py --prompt-name metadata_harmonize_v1_default --prefer-small
 ```
 
-Run scores of part 1
+### Run scores of part 1
 
 ```
 python scripts/part1_score.py --gold gold/doi20_gold.json --results results/part1 --outdir results/part1_scores
@@ -44,7 +44,7 @@ python scripts/part2_optimize_prompts.py --method avatar --opt-model qwen2.5:3b
 python scripts/part2_optimize_prompts.py --method textgrad --opt-model qwen2.5:3b
 ```
 
-The re-run Part 1 with each optimized prompt
+### The re-run Part 1 with each optimized prompt
 
 ```
 python scripts/part1_run_benchmark.py --use-llm --prompt-name metadata_harmonize_v1_avatar_opt --save-h5ad --prefer-small
