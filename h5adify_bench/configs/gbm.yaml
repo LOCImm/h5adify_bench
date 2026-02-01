@@ -1,0 +1,28 @@
+gbmspace:
+  out_dir: "data/gbmspace"
+  # direct endpoints from GBM-Space portal
+  snrna_tar_url: "https://gbmspace.cog.sanger.ac.uk/GBM_space_snRNA.tar.gz"
+  visium_tar_url: "https://gbmspace.cog.sanger.ac.uk/spatial_data_visium.tar.gz"
+  # optional smaller "selected" tarball
+  visium_selected_tar_url: "https://gbmspace.cog.sanger.ac.uk/spatial_data_visium_selected.tar.gz"
+
+census_gbm:
+  out_dir: "data/gbm_census"
+  census_version: "stable"
+  query_terms:
+    - "glioblastoma"
+    - "glioblastoma multiforme"
+    - "GBM"
+  max_datasets_per_species: 3
+  max_obs_per_dataset: 30000
+  species:
+    - "Homo sapiens"
+    - "Mus musculus"
+    - "Rattus norvegicus"
+
+merge:
+  out_dir: "results/part4_gbm"
+  join: "inner"
+  target_species: "human"   # maps non-human genes if possible
+  metadata_use_llm: true
+  metadata_prompt_name: "metadata_harmonize_v1_default"

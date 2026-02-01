@@ -1,0 +1,31 @@
+download:
+  out_dir: "data/doi20"
+  census_version: "stable"
+  # Source H5ADs can be huge. Keep a small benchmark copy too:
+  make_small_copy: true
+  small_max_obs: 20000
+  small_max_vars: 8000
+  small_layer: null      # keep X (default); set "counts" if you want
+  seed: 42
+
+dois:
+  - "10.1038/s41586-020-2496-1"
+  - "10.1038/s41586-020-2157-4"
+  - "10.1038/s41586-020-2922-4"
+  - "10.1038/s41586-018-0590-4"
+  - "10.1126/science.aaa1934"
+  - "10.1038/s41586-018-0654-5"
+  - "10.1126/science.abl4896"
+  - "10.1038/s41593-020-00787-0"
+  - "10.1126/science.aaw1219"
+  - "10.1038/s41587-020-0739-1"
+  - "10.1126/science.aau5324"
+  - "10.1126/science.aat5691"
+  - "10.1038/s41586-019-1049-y"
+  - "10.1016/j.cell.2022.04.003"
+  - "10.1016/j.cell.2020.09.056"
+  - "10.1038/s41587-019-0290-0"
+  - "10.1126/science.aau0730"
+  - "10.1038/s41587-021-00927-2"
+  - "10.1016/j.cell.2021.04.048"
+  - "10.1038/s41586-023-05869-0"
