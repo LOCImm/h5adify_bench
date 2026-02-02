@@ -216,6 +216,26 @@ python scripts/part1_run_annotation_paperaware.py \
   --verify
 ```
 
+The `scripts/part1_eval_compare_methods.py` produces:
+
+   - per-dataset/per-field metrics,
+   - macro/micro aggregates,
+   - composite weighted score,
+   - LLM-style: EM, token-F1, ROUGE-L-F1 for titles, Slot Error Rate (SER) for set fields,
+   - coverage/hallucination proxy metrics.
+
+```
+python scripts/part1_eval_compare_methods.py \
+  --gold configs/doi20_gold_verbose.json \
+  --field-map configs/field_map.yaml \
+  --normalize configs/normalization.yaml \
+  --weights configs/field_weights.yaml \
+  --pred deterministic=results_part1/deterministic \
+  --pred llm=results_part1/llm_only \
+  --pred hybrid=results_part1/hybrid \
+  --outdir eval_part1
+``
+
 # Part 2 - Avatar vs TextGrad prompt optimization (metadata mapping prompt)
 
 ```
