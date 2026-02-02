@@ -234,7 +234,16 @@ python scripts/part1_eval_compare_methods.py \
   --pred llm=results_part1/llm_only \
   --pred hybrid=results_part1/hybrid \
   --outdir eval_part1
-``
+```
+
+The `part1_eval_evidence_support.py` (faithfulness / “supported by paper”), we implement a simple but effective proxy: does the predicted string appear in the paper text (papers/<doi_slug>/paper_fulltext.txt)? it’s useful to quantify “hallucination vs extractive grounding” in structured metadata.
+
+```
+python scripts/part1_eval_evidence_support.py \
+  --pred-dir results_part1/hybrid \
+  --papers-dir papers \
+  --out eval_part1/evidence_support_hybrid.json
+```
 
 # Part 2 - Avatar vs TextGrad prompt optimization (metadata mapping prompt)
 
