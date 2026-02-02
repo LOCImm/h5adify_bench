@@ -286,6 +286,19 @@ python scripts/part2_optimize_textgrad_paperaware.py \
   --ollama-model qwen2.5:3b
 ```
 
+Compare prompt variants (baseline vs Avatar vs TextGrad) + model grid 
+
+```
+python scripts/part2_eval_prompt_variants.py \
+  --gold configs/doi20_gold_verbose.json \
+  --field-map configs/field_map.yaml \
+  --normalize configs/normalization.yaml \
+  --weights configs/field_weights.yaml \
+  --root results_part2 \
+  --models qwen2.5_3b llama3_latest mistral_nemo_latest deepseek_r1_8b \
+  --variants baseline avatar textgrad \
+  --outdir eval_part2
+```
 
 ## Part 3 — Simulations (5–10 synthetic h5ad) + evaluation
 
