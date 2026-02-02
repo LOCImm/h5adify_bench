@@ -1,0 +1,21 @@
+# canonical fields expected by gold:
+# species, assay_modalities, technology, repositories, tissue_scope, disease_or_context, title
+
+default:
+  title: ["study_title", "title", "paper.title", "schema.title"]
+  species: ["species", "schema.species", "organism", "schema.organism"]
+  assay_modalities: ["assay_modalities", "modalities", "schema.modalities", "schema.assay_modalities"]
+  technology: ["technology", "platform", "schema.technology", "schema.platform"]
+  tissue_scope: ["tissue_scope", "tissue", "schema.tissue", "schema.tissue_scope"]
+  disease_or_context: ["disease_or_context", "disease", "context", "schema.disease", "schema.context"]
+  repositories: ["primary_accessions", "accessions", "repositories", "schema.primary_accessions", "schema.accessions"]
+
+# If one method stores its output under another key, add a method block:
+deterministic:
+  root: ["deterministic_facts", "facts"]
+
+llm:
+  root: ["schema"]
+
+hybrid:
+  root: ["schema"]
