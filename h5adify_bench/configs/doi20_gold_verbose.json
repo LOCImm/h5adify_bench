@@ -1,35 +1,22 @@
 {
-  "schema_version": "1.0",
-  "created_date": "2026-02-02",
-  "purpose": "Gold-standard, dataset-level metadata ground truth for 20 DOI-linked single-cell / spatial / multimodal datasets (for h5adify benchmark Part 1).",
-  "important_notes": [
-    "This JSON is dataset-level ground truth (species/assay/tech/repository accessions). It is NOT a per-cell annotation.",
-    "Fields marked status=needs_manual_check are included but not fully verified from the sources I could access in this run (e.g., publisher pages that do not expose Data availability text cleanly).",
-    "For each DOI entry, the 'provenance' array records where each key claim comes from (paper HTML/PMC, GEO, Synapse, CNGBdb, EGA, ArrayExpress, Dryad, etc.).",
-    "URLs are provided inside JSON for traceability. (They are the evidence pointers you requested.)"
-  ],
-  "gold_field_conventions": {
-    "species": "Use NCBI-style common names where possible (human, mouse).",
-    "assay_modalities": [
-      "scRNA-seq",
-      "snRNA-seq",
-      "scATAC-seq",
-      "CITE-seq (RNA+protein)",
-      "multiome (RNA+ATAC)",
-      "spatial transcriptomics (Visium/Slide-seq/Stereo-seq/etc.)",
-      "imaging-based spatial (MERFISH/seqFISH+/STARmap)"
-    ],
-    "technology": "Platform name or method family (10x 3' v2/v3, Visium, Slide-seq, MERFISH, STARmap, sci-CAR, SNARE-seq, SHARE-seq, TEA-seq/ASAP-seq, Stereo-seq, etc.)",
-    "download_priority_order": [
-      "Official repository accession (GEO/EGA/ArrayExpress/CNGBdb/Synapse/Dryad)",
-      "Official project portal (cellxgene / HCA / lab portal)",
-      "Benchmark mirrors (only if explicitly linked from the paper or an official repository page)"
+  "meta": {
+    "schema_name": "h5adify_bench_doi_gold_verbose",
+    "schema_version": "1.1",
+    "generated_on": "2026-02-02T20:59:44.858771+00:00",
+    "source_inputs": {
+      "doi_config_file": "doi20.yaml",
+      "baseline_gold_file": "doi20_gold_verbose.json"
+    },
+    "notes": [
+      "This file is intended as a gold-standard reference for benchmarking metadata extraction and harmonization.",
+      "Evidence URLs were added for entries that were previously incomplete and the Maynard DLPFC DOI was corrected to 10.1038/s41593-020-00787-0 (replacing 10.1038/s41593-021-00906-9).",
+      "Repository accessions are provided when explicitly stated on the publisher page, PMC full text, or GEO series pages."
     ]
   },
   "items": [
     {
       "doi": "10.1038/s41586-020-2496-1",
-      "slug": "s41586-020-2496-1_tabula-muris-senis",
+      "slug": "10_1038_s41586_020_2496_1",
       "paper": {
         "title": "A Single Cell Transcriptomic Atlas Characterizes Aging Tissues in the Mouse",
         "year": 2020,
@@ -37,12 +24,25 @@
         "status": "verified"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["scRNA-seq"],
-        "technology": ["droplet scRNA-seq (multiple tissues; Tabula Muris Senis atlas)"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "scRNA-seq"
+        ],
+        "technology": [
+          "droplet scRNA-seq (multiple tissues; Tabula Muris Senis atlas)"
+        ],
         "tissue_scope": "multi-organ (mouse)",
         "disease_or_context": "aging",
-        "expected_metadata_targets": ["species", "tissue", "age", "sex (if present)", "batch/library", "technology"]
+        "expected_metadata_targets": [
+          "species",
+          "tissue",
+          "age",
+          "sex (if present)",
+          "batch/library",
+          "technology"
+        ]
       },
       "data_availability": {
         "status": "verified",
@@ -73,31 +73,46 @@
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories",
-          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8240505/",
-          "evidence_excerpt": "Gene counts and metadata are available from figshare and GEO (GSE132042)... raw data ... AWS S3 bucket."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories",
+            "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8240505/",
+            "evidence_excerpt": "Gene counts and metadata are available from figshare and GEO (GSE132042)... raw data ... AWS S3 bucket."
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1038/s41586-020-2157-4",
-      "slug": "s41586-020-2157-4_human-cell-landscape",
+      "slug": "10_1038_s41586_020_2157_4",
       "paper": {
-        "title": null,
+        "title": "Construction of A Human Cell Landscape by Single-cell mRNA-seq",
         "year": 2020,
         "journal": "Nature",
-        "status": "partially_verified"
+        "status": "verified_for_accession"
       },
       "gold_standard": {
-        "species": ["human"],
-        "assay_modalities": ["scRNA-seq"],
-        "technology": ["droplet scRNA-seq (multi-organ atlas; HCL)"],
+        "species": [
+          "human"
+        ],
+        "assay_modalities": [
+          "scRNA-seq"
+        ],
+        "technology": [
+          "droplet scRNA-seq (multi-organ atlas; HCL)"
+        ],
         "tissue_scope": "multi-organ (human)",
         "disease_or_context": "healthy reference atlas",
-        "expected_metadata_targets": ["species", "organ/tissue", "donor", "sex (if present)", "batch/library", "technology"]
+        "expected_metadata_targets": [
+          "species",
+          "organ/tissue",
+          "donor",
+          "sex (if present)",
+          "batch/library",
+          "technology"
+        ]
       },
       "data_availability": {
         "status": "verified_for_accession",
@@ -119,31 +134,68 @@
             "accession": "38833785-fac5-48fd-944a-0f62a4c23ed1",
             "download_hint": "Curated browsing + download as h5ad in cellxgene ecosystem.",
             "is_primary": false
+          },
+          {
+            "type": "GEO",
+            "accession": "GSE134355",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE134355",
+            "notes": "Primary GEO Series; includes human Microwell-seq plus supplementary mouse cell atlas samples."
+          },
+          {
+            "type": "BioProject",
+            "accession": "PRJNA554845",
+            "url": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA554845",
+            "notes": "BioProject linked from GEO Series relations."
+          },
+          {
+            "type": "SRA",
+            "accession": "SRP214806",
+            "url": "https://www.ncbi.nlm.nih.gov/sra?term=SRP214806",
+            "notes": "SRA project linked from GEO Series relations."
+          },
+          {
+            "type": "SRA",
+            "accession": "SRP217103",
+            "url": "https://www.ncbi.nlm.nih.gov/sra?term=SRP217103",
+            "notes": "Additional SRA project linked from GEO Series relations."
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0].accession",
-          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE134355",
-          "evidence_excerpt": "GSE134355 ... 'single-cell HCL analysis' pipeline ... human cell landscape."
-        },
-        {
-          "field": "data_availability.repositories[1].accession",
-          "source_url": "https://explore.data.humancellatlas.org/projects/1fac187b-1c3f-41c4-b6b6-6a9a8c0489d1",
-          "evidence_excerpt": "Construction of A Human Cell Landscape by Single-cell mRNA-seq."
-        },
-        {
-          "field": "data_availability.repositories[2].accession",
-          "source_url": "https://cellxgene.cziscience.com/collections/38833785-fac5-48fd-944a-0f62a4c23ed1",
-          "evidence_excerpt": "Collection page for 'Construction of a human cell landscape at single-cell level'."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0].accession",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE134355",
+            "evidence_excerpt": "GSE134355 ... 'single-cell HCL analysis' pipeline ... human cell landscape."
+          },
+          {
+            "field": "data_availability.repositories[1].accession",
+            "source_url": "https://explore.data.humancellatlas.org/projects/1fac187b-1c3f-41c4-b6b6-6a9a8c0489d1",
+            "evidence_excerpt": "Construction of A Human Cell Landscape by Single-cell mRNA-seq."
+          },
+          {
+            "field": "data_availability.repositories[2].accession",
+            "source_url": "https://cellxgene.cziscience.com/collections/38833785-fac5-48fd-944a-0f62a4c23ed1",
+            "evidence_excerpt": "Collection page for 'Construction of a human cell landscape at single-cell level'."
+          },
+          {
+            "source": "GEO_series_page",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE134355",
+            "extracted_fields": [
+              "paper.title",
+              "paper.doi",
+              "data_availability.repositories",
+              "data_availability.relations"
+            ],
+            "extracted_on": "2026-02-02"
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1038/s41586-020-2922-4",
-      "slug": "s41586-020-2922-4_travaglini-lung-atlas",
+      "slug": "10_1038_s41586_020_2922_4",
       "paper": {
         "title": "A molecular cell atlas of the human lung from single-cell RNA sequencing",
         "year": 2020,
@@ -151,12 +203,26 @@
         "status": "verified"
       },
       "gold_standard": {
-        "species": ["human"],
-        "assay_modalities": ["scRNA-seq", "snRNA-seq"],
-        "technology": ["droplet scRNA-seq / snRNA-seq (lung atlas)"],
+        "species": [
+          "human"
+        ],
+        "assay_modalities": [
+          "scRNA-seq",
+          "snRNA-seq"
+        ],
+        "technology": [
+          "droplet scRNA-seq / snRNA-seq (lung atlas)"
+        ],
         "tissue_scope": "lung",
         "disease_or_context": "healthy reference atlas",
-        "expected_metadata_targets": ["species", "tissue", "donor", "sex (if present)", "batch", "technology"]
+        "expected_metadata_targets": [
+          "species",
+          "tissue",
+          "donor",
+          "sex (if present)",
+          "batch",
+          "technology"
+        ]
       },
       "data_availability": {
         "status": "verified",
@@ -175,146 +241,244 @@
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories",
-          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9539023/",
-          "evidence_excerpt": "Data deposited on Synapse (syn21041850) and raw data on EGA (EGAS00001004344)."
-        }
-      ]
-    },
-
-    {
-      "doi": "10.1038/s41586-020-2496-1",
-      "slug": "duplicate_guard_tabula-muris-senis",
-      "paper": {
-        "title": null,
-        "year": null,
-        "journal": null,
-        "status": "duplicate_removed"
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories",
+            "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9539023/",
+            "evidence_excerpt": "Data deposited on Synapse (syn21041850) and raw data on EGA (EGAS00001004344)."
+          }
+        ]
       },
-      "gold_standard": {
-        "note": "This entry is intentionally kept only as a duplicate guard. The real record is the first one."
-      },
-      "data_availability": { "status": "duplicate_removed", "repositories": [] },
-      "provenance": []
+      "study": {}
     },
-
     {
       "doi": "10.1038/s41586-018-0590-4",
-      "slug": "s41586-018-0590-4_tabula-muris",
+      "slug": "10_1038_s41586_018_0590_4",
       "paper": {
         "title": "Single-cell transcriptomics of 20 mouse organs creates a Tabula Muris",
         "year": 2018,
         "journal": "Nature",
-        "status": "needs_manual_check"
+        "status": "verified_for_statement_and_accessions"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["scRNA-seq"],
-        "technology": ["droplet scRNA-seq + plate-based (Tabula Muris v1; depending on subset)"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "scRNA-seq"
+        ],
+        "technology": [
+          "droplet scRNA-seq + plate-based (Tabula Muris v1; depending on subset)"
+        ],
         "tissue_scope": "multi-organ (mouse)",
         "disease_or_context": "healthy reference atlas",
-        "expected_metadata_targets": ["species", "organ/tissue", "sex (if present)", "batch", "technology/platform"]
+        "expected_metadata_targets": [
+          "species",
+          "organ/tissue",
+          "sex (if present)",
+          "batch",
+          "technology/platform"
+        ]
       },
       "data_availability": {
-        "status": "needs_manual_check",
+        "status": "verified_for_statement_and_accessions",
         "repositories": [
           {
             "type": "portal",
             "accession": "Tabula Muris (CZ Biohub portal)",
             "download_hint": "Use the official Tabula Muris download portal referenced by the paper; export to h5ad.",
             "is_primary": true
+          },
+          {
+            "type": "Portal",
+            "accession": "tabula-muris.ds.czbiohub.org",
+            "url": "https://tabula-muris.ds.czbiohub.org/",
+            "notes": "Paper states that datasets are available at the Tabula Muris data portal."
+          },
+          {
+            "type": "figshare_project",
+            "accession": "27733",
+            "url": "https://figshare.com/projects/Tabula_Muris_Transcriptomic_characterization_of_20_organs_and_tissues/27733",
+            "notes": "Paper points to a figshare project hosting data and code outputs."
+          },
+          {
+            "type": "GEO",
+            "accession": "GSE109774",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE109774",
+            "notes": "Paper states that raw data are deposited in GEO under this accession."
+          },
+          {
+            "type": "GitHub",
+            "accession": "czbiohub/tabula-muris",
+            "url": "https://github.com/czbiohub/tabula-muris",
+            "notes": "Paper states that code is available at this repository."
           }
         ],
         "note": "Publisher 'Data availability' text was not fully captured in the sources I could access in this run; verify the exact accession IDs from the paper page."
       },
-      "provenance": [
-        {
-          "field": "paper.title",
-          "source_url": "https://www.nature.com/articles/s41586-018-0590-4",
-          "evidence_excerpt": "Nature article page for DOI 10.1038/s41586-018-0590-4."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "paper.title",
+            "source_url": "https://www.nature.com/articles/s41586-018-0590-4",
+            "evidence_excerpt": "Nature article page for DOI 10.1038/s41586-018-0590-4."
+          },
+          {
+            "source": "PMC_fulltext",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6642641/",
+            "extracted_fields": [
+              "data_availability.statement",
+              "study.notes"
+            ],
+            "extracted_on": "2026-02-02"
+          }
+        ]
+      },
+      "study": {
+        "dataset_name": "Tabula Muris (2018)",
+        "organism": "Mus musculus",
+        "scope": "20 organs and tissues; adult mouse; two technologies (microfluidic Smart-seq2 and droplet-based).",
+        "notes": "Paper statement reports 100,605 cells total, from 3 female and 4 male mice, 3\u20134 months old; scRNA-seq via microfluidics (Smart-seq2) and droplet-based methods."
+      }
     },
-
     {
       "doi": "10.1126/science.aaa1934",
-      "slug": "science-aaa1934_zeisel-mouse-cortex",
+      "slug": "10_1126_science_aaa1934",
       "paper": {
         "title": "Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq",
         "year": 2015,
         "journal": "Science",
-        "status": "needs_manual_check"
+        "status": "verified_for_accession"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["scRNA-seq"],
-        "technology": ["scRNA-seq (mouse cortex/hippocampus; early atlas)"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "scRNA-seq"
+        ],
+        "technology": [
+          "scRNA-seq (mouse cortex/hippocampus; early atlas)"
+        ],
         "tissue_scope": "brain (cortex, hippocampus)",
         "disease_or_context": "healthy",
-        "expected_metadata_targets": ["species", "brain region", "batch", "technology"]
+        "expected_metadata_targets": [
+          "species",
+          "brain region",
+          "batch",
+          "technology"
+        ]
       },
       "data_availability": {
-        "status": "needs_manual_check",
+        "status": "verified_for_accession",
         "repositories": [
           {
             "type": "GEO",
             "accession": "GSE60361",
             "download_hint": "Common public deposition for this dataset; verify directly from paper / GEO.",
             "is_primary": true
+          },
+          {
+            "type": "GEO",
+            "accession": "GSE60361",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361",
+            "notes": "Science paper states the dataset is deposited in GEO under this accession."
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0].accession",
-          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361",
-          "evidence_excerpt": "GSE60361 is the canonical GEO series for the Zeisel mouse cortex/hippocampus dataset."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0].accession",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE60361",
+            "evidence_excerpt": "GSE60361 is the canonical GEO series for the Zeisel mouse cortex/hippocampus dataset."
+          },
+          {
+            "source": "Science_article_page",
+            "url": "https://www.science.org/doi/10.1126/science.aaa1934",
+            "extracted_fields": [
+              "data_availability.statement"
+            ],
+            "extracted_on": "2026-02-02"
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1038/s41586-018-0654-5",
-      "slug": "s41586-018-0654-5_tasic-m1-v1",
+      "slug": "10_1038_s41586_018_0654_5",
       "paper": {
         "title": "Shared and distinct transcriptomic cell types across neocortical areas",
         "year": 2018,
         "journal": "Nature",
-        "status": "needs_manual_check"
+        "status": "verified_for_accession"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["scRNA-seq"],
-        "technology": ["SMART-seq v4 (Allen Institute style; verify subset)"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "scRNA-seq"
+        ],
+        "technology": [
+          "SMART-seq v4 (Allen Institute style; verify subset)"
+        ],
         "tissue_scope": "brain (mouse cortex)",
         "disease_or_context": "healthy",
-        "expected_metadata_targets": ["species", "brain area", "batch", "technology/platform"]
+        "expected_metadata_targets": [
+          "species",
+          "brain area",
+          "batch",
+          "technology/platform"
+        ]
       },
       "data_availability": {
-        "status": "needs_manual_check",
+        "status": "verified_for_accession",
         "repositories": [
           {
             "type": "GEO",
             "accession": "GSE115746",
             "download_hint": "Common deposition for Tasic 2018 cell types; verify from the paper page.",
             "is_primary": true
+          },
+          {
+            "type": "GEO",
+            "accession": "GSE115746",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE115746",
+            "notes": "PMC full text lists GEO accession for the dataset."
+          },
+          {
+            "type": "Portal",
+            "accession": "Allen Cell Types Database",
+            "url": "https://celltypes.brain-map.org/",
+            "notes": "Allen Institute portal hosting processed cell type expression matrices/annotations for this project line."
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0].accession",
-          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE115746",
-          "evidence_excerpt": "GSE115746 is the GEO series commonly associated with Tasic et al. 2018 cortical cell types."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0].accession",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE115746",
+            "evidence_excerpt": "GSE115746 is the GEO series commonly associated with Tasic et al. 2018 cortical cell types."
+          },
+          {
+            "source": "PMC_fulltext",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6086934/",
+            "extracted_fields": [
+              "data_availability.statement"
+            ],
+            "extracted_on": "2026-02-02"
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1126/science.abl4896",
-      "slug": "science-abl4896_tabula-sapiens",
+      "slug": "10_1126_science_abl4896",
       "paper": {
         "title": "The Tabula Sapiens: a multiple-organ, single-cell transcriptomic atlas of humans",
         "year": 2022,
@@ -322,12 +486,25 @@
         "status": "verified"
       },
       "gold_standard": {
-        "species": ["human"],
-        "assay_modalities": ["scRNA-seq"],
-        "technology": ["droplet scRNA-seq (multiple organs; Tabula Sapiens)"],
+        "species": [
+          "human"
+        ],
+        "assay_modalities": [
+          "scRNA-seq"
+        ],
+        "technology": [
+          "droplet scRNA-seq (multiple organs; Tabula Sapiens)"
+        ],
         "tissue_scope": "multi-organ (human)",
         "disease_or_context": "healthy reference atlas",
-        "expected_metadata_targets": ["species", "organ/tissue", "donor", "sex (if present)", "batch", "technology"]
+        "expected_metadata_targets": [
+          "species",
+          "organ/tissue",
+          "donor",
+          "sex (if present)",
+          "batch",
+          "technology"
+        ]
       },
       "data_availability": {
         "status": "verified",
@@ -352,61 +529,91 @@
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories",
-          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9812260/",
-          "evidence_excerpt": "All data are available under GSE201333; additional files on figshare and S3 links."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories",
+            "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9812260/",
+            "evidence_excerpt": "All data are available under GSE201333; additional files on figshare and S3 links."
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
-      "doi": "10.1038/s41593-021-00906-9",
-      "slug": "s41593-021-00906-9_maynard-dlpfc-visium",
+      "doi": "10.1038/s41593-020-00787-0",
+      "slug": "10_1038_s41593_020_00787_0",
       "paper": {
         "title": "Transcriptome-scale spatial gene expression in the human dorsolateral prefrontal cortex",
         "year": 2021,
         "journal": "Nature Neuroscience",
-        "status": "verified"
+        "status": "verified_for_statement",
+        "doi": "10.1038/s41593-020-00787-0"
       },
       "gold_standard": {
-        "species": ["human"],
-        "assay_modalities": ["spatial transcriptomics (Visium)"],
-        "technology": ["10x Genomics Visium"],
+        "species": [
+          "human"
+        ],
+        "assay_modalities": [
+          "spatial transcriptomics (Visium)"
+        ],
+        "technology": [
+          "10x Genomics Visium"
+        ],
         "tissue_scope": "brain (DLPFC)",
         "disease_or_context": "healthy reference spatial dataset",
-        "expected_metadata_targets": ["species", "brain region", "donor", "sex (if present)", "batch", "technology", "spot/barcode coordinates"]
+        "expected_metadata_targets": [
+          "species",
+          "brain region",
+          "donor",
+          "sex (if present)",
+          "batch",
+          "technology",
+          "spot/barcode coordinates"
+        ]
       },
       "data_availability": {
-        "status": "verified",
+        "status": "verified_for_statement",
         "repositories": [
-          {
-            "type": "Globus",
-            "accession": "paper-provided Globus endpoint",
-            "download_hint": "Raw data available through the Globus endpoint referenced in the paper.",
-            "is_primary": true
-          },
           {
             "type": "R_package",
             "accession": "spatialLIBD",
-            "download_hint": "Processed objects available via spatialLIBD (R). Export to h5ad for benchmarking.",
-            "is_primary": false
+            "url": "https://bioconductor.org/packages/spatialLIBD",
+            "notes": "Paper states data are available in the Bioconductor package spatialLIBD."
+          },
+          {
+            "type": "Globus",
+            "accession": "jhpce#HumanPilot10x",
+            "url": "https://research.libd.org/globus",
+            "notes": "Paper states raw/processed data are available via Globus endpoint jhpce#HumanPilot10x."
+          },
+          {
+            "type": "GitHub",
+            "accession": "LieberInstitute/HumanPilot",
+            "url": "https://github.com/LieberInstitute/HumanPilot",
+            "notes": "Paper states analysis code is available here."
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories",
-          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8991354/",
-          "evidence_excerpt": "Raw data available through Globus; processed data in spatialLIBD."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "source": "Nature_publisher_page",
+            "url": "https://www.nature.com/articles/s41593-020-00787-0",
+            "extracted_fields": [
+              "paper.title",
+              "data_availability.statement",
+              "code_availability.statement"
+            ],
+            "extracted_on": "2026-02-02"
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1126/science.aaw1219",
-      "slug": "science-aaw1219_slide-seq",
+      "slug": "10_1126_science_aaw1219",
       "paper": {
         "title": "High-resolution spatial transcriptomics with Slide-seq",
         "year": 2019,
@@ -414,12 +621,24 @@
         "status": "verified"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["spatial transcriptomics (bead-based)"],
-        "technology": ["Slide-seq"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "spatial transcriptomics (bead-based)"
+        ],
+        "technology": [
+          "Slide-seq"
+        ],
         "tissue_scope": "brain (and/or other tissues per study)",
         "disease_or_context": "method paper + applications",
-        "expected_metadata_targets": ["species", "tissue", "batch", "technology", "spatial coordinates"]
+        "expected_metadata_targets": [
+          "species",
+          "tissue",
+          "batch",
+          "technology",
+          "spatial coordinates"
+        ]
       },
       "data_availability": {
         "status": "verified",
@@ -432,55 +651,85 @@
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories",
-          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6927209/",
-          "evidence_excerpt": "Data and materials availability: Study data are available on the Broad Institute Single Cell Portal."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories",
+            "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6927209/",
+            "evidence_excerpt": "Data and materials availability: Study data are available on the Broad Institute Single Cell Portal."
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1038/s41587-020-0739-1",
-      "slug": "s41587-020-0739-1_slide-seqv2",
+      "slug": "10_1038_s41587_020_0739_1",
       "paper": {
         "title": "Slide-seqV2: High-resolution spatial transcriptomics for the study of tissue at near-cellular resolution",
         "year": 2021,
         "journal": "Nature Biotechnology",
-        "status": "partially_verified"
+        "status": "verified_for_statement"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["spatial transcriptomics (bead-based)"],
-        "technology": ["Slide-seqV2"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "spatial transcriptomics (bead-based)"
+        ],
+        "technology": [
+          "Slide-seqV2"
+        ],
         "tissue_scope": "method paper + tissue applications",
         "disease_or_context": "method paper",
-        "expected_metadata_targets": ["species", "tissue", "batch", "technology", "spatial coordinates"]
+        "expected_metadata_targets": [
+          "species",
+          "tissue",
+          "batch",
+          "technology",
+          "spatial coordinates"
+        ]
       },
       "data_availability": {
-        "status": "verified_for_portal",
+        "status": "verified_for_statement",
         "repositories": [
           {
             "type": "Broad_Single_Cell_Portal",
             "accession": "SCP815",
             "download_hint": "Paper-associated processed data are available as Single Cell Portal study SCP815.",
             "is_primary": true
+          },
+          {
+            "type": "Broad_Single_Cell_Portal",
+            "accession": "SCP815",
+            "url": "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary",
+            "notes": "Author manuscript Data Availability Statement: all data available at this Broad Single Cell Portal study."
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0].accession",
-          "source_url": "https://singlecell.broadinstitute.org/single_cell/study/SCP815",
-          "evidence_excerpt": "Single Cell Portal study SCP815 is labeled for Slide-seqV2 dataset distribution."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0].accession",
+            "source_url": "https://singlecell.broadinstitute.org/single_cell/study/SCP815",
+            "evidence_excerpt": "Single Cell Portal study SCP815 is labeled for Slide-seqV2 dataset distribution."
+          },
+          {
+            "source": "Author_manuscript_pdf",
+            "url": "https://takara.co.kr/file/manual/pdf/nihms-1751017.pdf",
+            "extracted_fields": [
+              "data_availability.statement"
+            ],
+            "extracted_on": "2026-02-02"
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1126/science.aau5324",
-      "slug": "science-aau5324_merfish-preoptic",
+      "slug": "10_1126_science_aau5324",
       "paper": {
         "title": "Molecular, spatial, and functional single-cell profiling of the hypothalamic preoptic region",
         "year": 2018,
@@ -488,12 +737,26 @@
         "status": "verified_for_dataset_repo"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["imaging-based spatial (MERFISH)", "scRNA-seq (supporting)"],
-        "technology": ["MERFISH"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "imaging-based spatial (MERFISH)",
+          "scRNA-seq (supporting)"
+        ],
+        "technology": [
+          "MERFISH"
+        ],
         "tissue_scope": "brain (hypothalamic preoptic region)",
         "disease_or_context": "healthy / behavior contexts",
-        "expected_metadata_targets": ["species", "brain region", "sex (explicitly present in Dryad file)", "batch/animal", "technology", "spatial coordinates"]
+        "expected_metadata_targets": [
+          "species",
+          "brain region",
+          "sex (explicitly present in Dryad file)",
+          "batch/animal",
+          "technology",
+          "spatial coordinates"
+        ]
       },
       "data_availability": {
         "status": "verified",
@@ -506,18 +769,20 @@
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0].accession",
-          "source_url": "https://datadryad.org/dataset/doi:10.5061/dryad.8t8s248",
-          "evidence_excerpt": "Dryad dataset 'Data from: Molecular, spatial and functional single-cell profiling...' with downloadable files."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0].accession",
+            "source_url": "https://datadryad.org/dataset/doi:10.5061/dryad.8t8s248",
+            "evidence_excerpt": "Dryad dataset 'Data from: Molecular, spatial and functional single-cell profiling...' with downloadable files."
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1126/science.aat5691",
-      "slug": "science-aat5691_starmap",
+      "slug": "10_1126_science_aat5691",
       "paper": {
         "title": "Three-dimensional intact-tissue sequencing of single-cell transcriptional states",
         "year": 2018,
@@ -525,12 +790,24 @@
         "status": "verified_for_statement_plus_dataset_mirror"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["imaging-based spatial (STARmap)"],
-        "technology": ["STARmap"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "imaging-based spatial (STARmap)"
+        ],
+        "technology": [
+          "STARmap"
+        ],
         "tissue_scope": "brain (visual cortex volumes; method demonstration)",
         "disease_or_context": "healthy",
-        "expected_metadata_targets": ["species", "brain region", "batch/sample", "technology", "3D coordinates (if present)"]
+        "expected_metadata_targets": [
+          "species",
+          "brain region",
+          "batch/sample",
+          "technology",
+          "3D coordinates (if present)"
+        ]
       },
       "data_availability": {
         "status": "verified_for_paper_statement",
@@ -550,253 +827,99 @@
         ],
         "note": "The paper statement says data are in main text/supplementary; figshare provides a practical downloadable bundle widely used in benchmarks."
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0]",
-          "source_url": "https://www.science.org/doi/10.1126/science.aat5691",
-          "evidence_excerpt": "Data and materials availability: All data are available in the main text or the supplementary materials."
-        },
-        {
-          "field": "data_availability.repositories[1]",
-          "source_url": "https://figshare.com/articles/dataset/STARmap_datasets/22565200",
-          "evidence_excerpt": "Figshare record titled 'STARmap datasets' with multiple sub-datasets."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0]",
+            "source_url": "https://www.science.org/doi/10.1126/science.aat5691",
+            "evidence_excerpt": "Data and materials availability: All data are available in the main text or the supplementary materials."
+          },
+          {
+            "field": "data_availability.repositories[1]",
+            "source_url": "https://figshare.com/articles/dataset/STARmap_datasets/22565200",
+            "evidence_excerpt": "Figshare record titled 'STARmap datasets' with multiple sub-datasets."
+          }
+        ]
+      },
+      "study": {}
     },
-
     {
       "doi": "10.1038/s41586-019-1049-y",
-      "slug": "s41586-019-1049-y_seqfish-plus",
+      "slug": "10_1038_s41586_019_1049_y",
       "paper": {
-        "title": "Single-cell profiling of the developing mouse brain and spinal cord with split-pool barcoding (seqFISH+ context)",
+        "title": "Transcriptome-scale super-resolved imaging in tissues by RNA seqFISH+",
         "year": 2019,
         "journal": "Nature",
-        "status": "needs_manual_check"
+        "status": "verified_for_statement"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["imaging-based spatial (seqFISH+)"],
-        "technology": ["seqFISH+"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "imaging-based spatial (seqFISH+)"
+        ],
+        "technology": [
+          "seqFISH+"
+        ],
         "tissue_scope": "mouse brain (spatial imaging)",
         "disease_or_context": "healthy/developmental context (verify exact study scope)",
-        "expected_metadata_targets": ["species", "brain region", "batch/sample", "technology", "spatial coordinates"]
+        "expected_metadata_targets": [
+          "species",
+          "brain region",
+          "batch/sample",
+          "technology",
+          "spatial coordinates"
+        ]
       },
       "data_availability": {
-        "status": "partially_verified",
+        "status": "verified_for_statement",
         "repositories": [
           {
             "type": "Nature_article_statement",
             "accession": "Code availability listed; data availability requires manual confirmation",
             "download_hint": "The accessible HTML snippet did not expose a clean public accession for imaging matrices in this run; verify from the full article 'Data availability'.",
             "is_primary": true
+          },
+          {
+            "type": "GitHub",
+            "accession": "CaiGroup/seqFISH-PLUS",
+            "url": "https://github.com/CaiGroup/seqFISH-PLUS",
+            "notes": "Paper states that source data are available at this repository."
+          },
+          {
+            "type": "GEO",
+            "accession": "GSE98674",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE98674",
+            "notes": "RNA-seq dataset referenced for cell-type mapping (as stated in paper)."
           }
         ],
         "note": "This entry is included for DOI completeness; you may want to substitute an explicitly-deposited seqFISH(+)/seqFISH+ dataset if your benchmark requires fully automated download."
       },
-      "provenance": [
-        {
-          "field": "paper.doi_page",
-          "source_url": "https://www.nature.com/articles/s41586-019-1049-y",
-          "evidence_excerpt": "Nature article page for DOI 10.1038/s41586-019-1049-y (data availability text not fully captured here)."
-        }
-      ]
-    },
-
-    {
-      "doi": "10.1038/s41587-019-0290-0",
-      "slug": "s41587-019-0290-0_snare-seq",
-      "paper": {
-        "title": "High-throughput sequencing of the transcriptome and chromatin accessibility in the same cell",
-        "year": 2019,
-        "journal": "Nature Biotechnology",
-        "status": "verified"
-      },
-      "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["multiome-like (RNA+ATAC)"],
-        "technology": ["SNARE-seq"],
-        "tissue_scope": "brain (mouse cortex; verify exact tissues in series)",
-        "disease_or_context": "healthy",
-        "expected_metadata_targets": ["species", "tissue", "batch", "technology", "paired modality indicators"]
-      },
-      "data_availability": {
-        "status": "verified",
-        "repositories": [
+      "provenance": {
+        "evidence": [
           {
-            "type": "GEO",
-            "accession": "GSE126074",
-            "download_hint": "Primary deposition for SNARE-seq multi-omic data.",
-            "is_primary": true
-          }
-        ]
-      },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0].accession",
-          "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6893138/",
-          "evidence_excerpt": "Data availability: GEO accession GSE126074."
-        }
-      ]
-    },
-
-    {
-      "doi": "10.1016/j.cell.2020.09.056",
-      "slug": "cell-2020-09-056_share-seq",
-      "paper": {
-        "title": "Chromatin potential identified by shared single-cell profiling of RNA and chromatin",
-        "year": 2020,
-        "journal": "Cell",
-        "status": "verified_for_accession"
-      },
-      "gold_standard": {
-        "species": ["mouse", "human"],
-        "assay_modalities": ["paired RNA+ATAC (multi-omics)"],
-        "technology": ["SHARE-seq"],
-        "tissue_scope": "method paper + tissues (mouse skin prominent; species mixing present)",
-        "disease_or_context": "healthy / differentiation contexts",
-        "expected_metadata_targets": ["species", "tissue", "batch", "technology", "paired modality indicators"]
-      },
-      "data_availability": {
-        "status": "verified_for_accession",
-        "repositories": [
-          {
-            "type": "GEO",
-            "accession": "GSE140203",
-            "download_hint": "Primary deposition for SHARE-seq datasets.",
-            "is_primary": true
-          }
-        ]
-      },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0].accession",
-          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE140203",
-          "evidence_excerpt": "GSE140203 GEO series labeled for the Cell SHARE-seq paper (10.1016/j.cell.2020.09.056)."
-        }
-      ]
-    },
-
-    {
-      "doi": "10.1126/science.aau0730",
-      "slug": "science-aau0730_sci-car",
-      "paper": {
-        "title": "Joint profiling of chromatin accessibility and gene expression in thousands of single cells",
-        "year": 2018,
-        "journal": "Science",
-        "status": "verified_for_accession"
-      },
-      "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["paired RNA+ATAC (multi-omics)"],
-        "technology": ["sci-CAR"],
-        "tissue_scope": "mouse tissues/cell lines (method paper context)",
-        "disease_or_context": "method paper",
-        "expected_metadata_targets": ["species", "batch", "technology", "paired modality indicators"]
-      },
-      "data_availability": {
-        "status": "verified_for_accession",
-        "repositories": [
-          {
-            "type": "GEO",
-            "accession": "GSE117089",
-            "download_hint": "Primary deposition for sci-CAR.",
-            "is_primary": true
-          }
-        ]
-      },
-      "provenance": [
-        {
-          "field": "data_availability.repositories[0].accession",
-          "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE117089",
-          "evidence_excerpt": "GSE117089 GEO series associated with sci-CAR paper (Science aau0730)."
-        }
-      ]
-    },
-
-    {
-      "doi": "10.1038/s41587-021-00927-2",
-      "slug": "s41587-021-00927-2_tea-seq-asap-seq",
-      "paper": {
-        "title": "Scalable, multimodal profiling of chromatin accessibility, gene expression and protein levels in single cells",
-        "year": 2021,
-        "journal": "Nature Biotechnology",
-        "status": "verified"
-      },
-      "gold_standard": {
-        "species": ["human"],
-        "assay_modalities": ["trimodal (ATAC+RNA+protein)"],
-        "technology": ["TEA-seq / ASAP-seq (paper naming; verify exact assay naming in your code)"],
-        "tissue_scope": "PBMC / immune contexts (paper)",
-        "disease_or_context": "method paper + immune profiling",
-        "expected_metadata_targets": ["species", "batch/donor", "technology", "modality presence flags", "antibody panel (if present)"]
-      },
-      "data_availability": {
-        "status": "verified",
-        "repositories": [
-          {
-            "type": "GEO",
-            "accession": "GSE156478",
-            "download_hint": "Primary deposition per publisher Data availability section.",
-            "is_primary": true
+            "field": "paper.doi_page",
+            "source_url": "https://www.nature.com/articles/s41586-019-1049-y",
+            "evidence_excerpt": "Nature article page for DOI 10.1038/s41586-019-1049-y (data availability text not fully captured here)."
           },
           {
-            "type": "GitHub",
-            "accession": "caleblareau/asap_reproducibility",
-            "download_hint": "Reproducibility code per publisher page.",
-            "is_primary": false
+            "source": "PMC_fulltext",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6544023/",
+            "extracted_fields": [
+              "paper.title",
+              "data_availability.statement",
+              "code_availability.statement"
+            ],
+            "extracted_on": "2026-02-02"
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories",
-          "source_url": "https://www.nature.com/articles/s41587-021-00927-2",
-          "evidence_excerpt": "Data availability: GEO accession GSE156478; code at github.com/caleblareau/asap_reproducibility."
-        }
-      ]
+      "study": {}
     },
-
-    {
-      "doi": "10.1016/j.cell.2021.04.048",
-      "slug": "cell-2021-04-048_seurat-wnn",
-      "paper": {
-        "title": "Integrated analysis of multimodal single-cell data",
-        "year": 2021,
-        "journal": "Cell",
-        "status": "needs_manual_check"
-      },
-      "gold_standard": {
-        "species": ["human"],
-        "assay_modalities": ["CITE-seq (RNA+protein)"],
-        "technology": ["CITE-seq (large PBMC reference)"],
-        "tissue_scope": "blood / PBMC",
-        "disease_or_context": "healthy reference + demonstrations",
-        "expected_metadata_targets": ["species", "donor", "batch", "technology", "antibody features", "protein counts layer"]
-      },
-      "data_availability": {
-        "status": "needs_manual_check",
-        "repositories": [
-          {
-            "type": "paper_supplement_or_portal",
-            "accession": "To be confirmed from the Cell paper 'Data and code availability' section",
-            "download_hint": "In many pipelines, this dataset is distributed through Seurat/Signac vignettes or companion portals; confirm exact download link from the paper PDF/supplement.",
-            "is_primary": true
-          }
-        ],
-        "note": "In this run, the open-access HTML snippet captured title/metadata but not the 'Data and code availability' block."
-      },
-      "provenance": [
-        {
-          "field": "paper.page",
-          "source_url": "https://www.sciencedirect.com/science/article/pii/S0092867421005833",
-          "evidence_excerpt": "ScienceDirect page for DOI 10.1016/j.cell.2021.04.048 (data availability block not exposed in captured lines)."
-        }
-      ]
-    },
-
     {
       "doi": "10.1016/j.cell.2022.04.003",
-      "slug": "cell-2022-04-003_stereo-seq-embryo",
+      "slug": "10_1016_j_cell_2022_04_003",
       "paper": {
         "title": "Spatiotemporal transcriptomic atlas of mouse organogenesis using Stereo-seq",
         "year": 2022,
@@ -804,12 +927,24 @@
         "status": "verified_for_accessions"
       },
       "gold_standard": {
-        "species": ["mouse"],
-        "assay_modalities": ["spatial transcriptomics"],
-        "technology": ["Stereo-seq"],
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "spatial transcriptomics"
+        ],
+        "technology": [
+          "Stereo-seq"
+        ],
         "tissue_scope": "mouse organogenesis (spatiotemporal atlas)",
         "disease_or_context": "development",
-        "expected_metadata_targets": ["species", "developmental stage", "batch", "technology", "spatial coordinates"]
+        "expected_metadata_targets": [
+          "species",
+          "developmental stage",
+          "batch",
+          "technology",
+          "spatial coordinates"
+        ]
       },
       "data_availability": {
         "status": "verified_for_accessions",
@@ -828,18 +963,304 @@
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories",
-          "source_url": "https://db.cngb.org/stomics/datasets/STDS0000058/",
-          "evidence_excerpt": "STDS0000058 dataset page lists CNP0001543 and Stereo-seq organogenesis context."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories",
+            "source_url": "https://db.cngb.org/stomics/datasets/STDS0000058/",
+            "evidence_excerpt": "STDS0000058 dataset page lists CNP0001543 and Stereo-seq organogenesis context."
+          }
+        ]
+      },
+      "study": {}
     },
-
+    {
+      "doi": "10.1016/j.cell.2020.09.056",
+      "slug": "10_1016_j_cell_2020_09_056",
+      "paper": {
+        "title": "Chromatin potential identified by shared single-cell profiling of RNA and chromatin",
+        "year": 2020,
+        "journal": "Cell",
+        "status": "verified_for_accession"
+      },
+      "gold_standard": {
+        "species": [
+          "mouse",
+          "human"
+        ],
+        "assay_modalities": [
+          "paired RNA+ATAC (multi-omics)"
+        ],
+        "technology": [
+          "SHARE-seq"
+        ],
+        "tissue_scope": "method paper + tissues (mouse skin prominent; species mixing present)",
+        "disease_or_context": "healthy / differentiation contexts",
+        "expected_metadata_targets": [
+          "species",
+          "tissue",
+          "batch",
+          "technology",
+          "paired modality indicators"
+        ]
+      },
+      "data_availability": {
+        "status": "verified_for_accession",
+        "repositories": [
+          {
+            "type": "GEO",
+            "accession": "GSE140203",
+            "download_hint": "Primary deposition for SHARE-seq datasets.",
+            "is_primary": true
+          }
+        ]
+      },
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0].accession",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE140203",
+            "evidence_excerpt": "GSE140203 GEO series labeled for the Cell SHARE-seq paper (10.1016/j.cell.2020.09.056)."
+          }
+        ]
+      },
+      "study": {}
+    },
+    {
+      "doi": "10.1038/s41587-019-0290-0",
+      "slug": "10_1038_s41587_019_0290_0",
+      "paper": {
+        "title": "High-throughput sequencing of the transcriptome and chromatin accessibility in the same cell",
+        "year": 2019,
+        "journal": "Nature Biotechnology",
+        "status": "verified"
+      },
+      "gold_standard": {
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "multiome-like (RNA+ATAC)"
+        ],
+        "technology": [
+          "SNARE-seq"
+        ],
+        "tissue_scope": "brain (mouse cortex; verify exact tissues in series)",
+        "disease_or_context": "healthy",
+        "expected_metadata_targets": [
+          "species",
+          "tissue",
+          "batch",
+          "technology",
+          "paired modality indicators"
+        ]
+      },
+      "data_availability": {
+        "status": "verified",
+        "repositories": [
+          {
+            "type": "GEO",
+            "accession": "GSE126074",
+            "download_hint": "Primary deposition for SNARE-seq multi-omic data.",
+            "is_primary": true
+          }
+        ]
+      },
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0].accession",
+            "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6893138/",
+            "evidence_excerpt": "Data availability: GEO accession GSE126074."
+          }
+        ]
+      },
+      "study": {}
+    },
+    {
+      "doi": "10.1126/science.aau0730",
+      "slug": "10_1126_science_aau0730",
+      "paper": {
+        "title": "Joint profiling of chromatin accessibility and gene expression in thousands of single cells",
+        "year": 2018,
+        "journal": "Science",
+        "status": "verified_for_accession"
+      },
+      "gold_standard": {
+        "species": [
+          "mouse"
+        ],
+        "assay_modalities": [
+          "paired RNA+ATAC (multi-omics)"
+        ],
+        "technology": [
+          "sci-CAR"
+        ],
+        "tissue_scope": "mouse tissues/cell lines (method paper context)",
+        "disease_or_context": "method paper",
+        "expected_metadata_targets": [
+          "species",
+          "batch",
+          "technology",
+          "paired modality indicators"
+        ]
+      },
+      "data_availability": {
+        "status": "verified_for_accession",
+        "repositories": [
+          {
+            "type": "GEO",
+            "accession": "GSE117089",
+            "download_hint": "Primary deposition for sci-CAR.",
+            "is_primary": true
+          }
+        ]
+      },
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories[0].accession",
+            "source_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE117089",
+            "evidence_excerpt": "GSE117089 GEO series associated with sci-CAR paper (Science aau0730)."
+          }
+        ]
+      },
+      "study": {}
+    },
+    {
+      "doi": "10.1038/s41587-021-00927-2",
+      "slug": "10_1038_s41587_021_00927_2",
+      "paper": {
+        "title": "Scalable, multimodal profiling of chromatin accessibility, gene expression and protein levels in single cells",
+        "year": 2021,
+        "journal": "Nature Biotechnology",
+        "status": "verified"
+      },
+      "gold_standard": {
+        "species": [
+          "human"
+        ],
+        "assay_modalities": [
+          "trimodal (ATAC+RNA+protein)"
+        ],
+        "technology": [
+          "TEA-seq / ASAP-seq (paper naming; verify exact assay naming in your code)"
+        ],
+        "tissue_scope": "PBMC / immune contexts (paper)",
+        "disease_or_context": "method paper + immune profiling",
+        "expected_metadata_targets": [
+          "species",
+          "batch/donor",
+          "technology",
+          "modality presence flags",
+          "antibody panel (if present)"
+        ]
+      },
+      "data_availability": {
+        "status": "verified",
+        "repositories": [
+          {
+            "type": "GEO",
+            "accession": "GSE156478",
+            "download_hint": "Primary deposition per publisher Data availability section.",
+            "is_primary": true
+          },
+          {
+            "type": "GitHub",
+            "accession": "caleblareau/asap_reproducibility",
+            "download_hint": "Reproducibility code per publisher page.",
+            "is_primary": false
+          }
+        ]
+      },
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories",
+            "source_url": "https://www.nature.com/articles/s41587-021-00927-2",
+            "evidence_excerpt": "Data availability: GEO accession GSE156478; code at github.com/caleblareau/asap_reproducibility."
+          }
+        ]
+      },
+      "study": {}
+    },
+    {
+      "doi": "10.1016/j.cell.2021.04.048",
+      "slug": "10_1016_j_cell_2021_04_048",
+      "paper": {
+        "title": "Integrated analysis of multimodal single-cell data",
+        "year": 2021,
+        "journal": "Cell",
+        "status": "verified_for_accession"
+      },
+      "gold_standard": {
+        "species": [
+          "human"
+        ],
+        "assay_modalities": [
+          "CITE-seq (RNA+protein)"
+        ],
+        "technology": [
+          "CITE-seq (large PBMC reference)"
+        ],
+        "tissue_scope": "blood / PBMC",
+        "disease_or_context": "healthy reference + demonstrations",
+        "expected_metadata_targets": [
+          "species",
+          "donor",
+          "batch",
+          "technology",
+          "antibody features",
+          "protein counts layer"
+        ]
+      },
+      "data_availability": {
+        "status": "verified_for_accession",
+        "repositories": [
+          {
+            "type": "paper_supplement_or_portal",
+            "accession": "To be confirmed from the Cell paper 'Data and code availability' section",
+            "download_hint": "In many pipelines, this dataset is distributed through Seurat/Signac vignettes or companion portals; confirm exact download link from the paper PDF/supplement.",
+            "is_primary": true
+          },
+          {
+            "type": "GEO",
+            "accession": "GSE164378",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164378",
+            "notes": "GEO series for the CITE-seq and ECITE-seq raw data referenced by the paper."
+          },
+          {
+            "type": "PubMed",
+            "accession": "34062119",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/34062119/",
+            "notes": "Bibliographic record."
+          }
+        ],
+        "note": "In this run, the open-access HTML snippet captured title/metadata but not the 'Data and code availability' block."
+      },
+      "provenance": {
+        "evidence": [
+          {
+            "field": "paper.page",
+            "source_url": "https://www.sciencedirect.com/science/article/pii/S0092867421005833",
+            "evidence_excerpt": "ScienceDirect page for DOI 10.1016/j.cell.2021.04.048 (data availability block not exposed in captured lines)."
+          },
+          {
+            "source": "GEO_series_page",
+            "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE164378",
+            "extracted_fields": [
+              "paper.title",
+              "data_availability.repositories"
+            ],
+            "extracted_on": "2026-02-02"
+          }
+        ]
+      },
+      "study": {}
+    },
     {
       "doi": "10.1038/s41586-023-05869-0",
-      "slug": "s41586-023-05869-0_trophoblast-spatial-multiomics",
+      "slug": "10_1038_s41586_023_05869_0",
       "paper": {
         "title": "Spatial multi-omics of human trophoblast development (paper page lists accessions below)",
         "year": 2023,
@@ -847,12 +1268,27 @@
         "status": "verified_for_accessions"
       },
       "gold_standard": {
-        "species": ["human"],
-        "assay_modalities": ["spatial transcriptomics", "spatial proteomics", "imaging"],
-        "technology": ["spatial multi-omics (paper-specific; see accessions)"],
+        "species": [
+          "human"
+        ],
+        "assay_modalities": [
+          "spatial transcriptomics",
+          "spatial proteomics",
+          "imaging"
+        ],
+        "technology": [
+          "spatial multi-omics (paper-specific; see accessions)"
+        ],
         "tissue_scope": "placenta / trophoblast development",
         "disease_or_context": "development",
-        "expected_metadata_targets": ["species", "developmental stage", "batch/sample", "technology", "spatial coordinates", "imaging links"]
+        "expected_metadata_targets": [
+          "species",
+          "developmental stage",
+          "batch/sample",
+          "technology",
+          "spatial coordinates",
+          "imaging links"
+        ]
       },
       "data_availability": {
         "status": "verified_for_accessions",
@@ -901,17 +1337,16 @@
           }
         ]
       },
-      "provenance": [
-        {
-          "field": "data_availability.repositories",
-          "source_url": "https://www.nature.com/articles/s41586-023-05869-0",
-          "evidence_excerpt": "Data availability lists E-MTAB-11547, E-MTAB-12279, EGA EGAD... and BioImage Archive S-BIAD787."
-        }
-      ]
+      "provenance": {
+        "evidence": [
+          {
+            "field": "data_availability.repositories",
+            "source_url": "https://www.nature.com/articles/s41586-023-05869-0",
+            "evidence_excerpt": "Data availability lists E-MTAB-11547, E-MTAB-12279, EGA EGAD... and BioImage Archive S-BIAD787."
+          }
+        ]
+      },
+      "study": {}
     }
-  ],
-  "post_processing_warnings": [
-    "I included a duplicate guard entry for 10.1038/s41586-020-2496-1; remove it in your pipeline if you require strict uniqueness.",
-    "For: Tabula Muris (2018), Zeisel (2015), Tasic (2018), seqFISH+ (2019), Seurat WNN (2021) the exact download endpoints may need a manual confirmation step if your scripts enforce machine-resolvable accessions."
   ]
 }
