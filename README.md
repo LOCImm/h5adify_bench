@@ -2,7 +2,9 @@
 
 ## Abstract
 
-<font color="red">Just an idea of quick abstract and possible article name. Probably include the reference to the main repository with the actual *h5adify* module.</font>
+```diff
+- Just an idea of quick abstract and possible article name. Probably include the reference to the main repository with the actual *h5adify* module.
+```
 
 This repository contains the **analysis pipelines, benchmarking frameworks, and reproducibility scripts** for the study:
 
@@ -40,7 +42,9 @@ Enhances LLM inference by **retrieving and parsing the full-text associated publ
 
 ## Reproducibility Statement
 
-<font color="red">Include information/instructions for reproducibility</font>
+```diff
+- Include information/instructions for reproducibility
+```
 
 All experiments, data retrieval steps, and scoring metrics detailed in the associated manuscript can be **fully reproduced** using the scripts provided in this repository.
 
@@ -52,7 +56,9 @@ All experiments, data retrieval steps, and scoring metrics detailed in the assoc
 
 ## Installation & Setup
 
-<font color="red">Either include full installation details or link the other GitHub with the module and the installation instructions.</font>
+```diff
+- Either include full installation details or link the other GitHub with the module and the installation instructions.
+```
 
 ### 1. Core Module Installation
 
@@ -360,7 +366,9 @@ python scripts/part2_eval_prompt_variants.py \
 
 ### Part 2 - Simulations (5–10 synthetic h5ad) + evaluation
 
-<font color="red">TODO</font>
+```diff
+- TODO
+```
 
 ```bash
 python scripts/part3_eval_simulations.py --use-llm --prompt-name metadata_harmonize_v1_default
@@ -368,7 +376,9 @@ python scripts/part3_eval_simulations.py --use-llm --prompt-name metadata_harmon
 
 ### Part 3 - GBM analysis: GBM-Space + extra GBM datasets → merge → integration → sex markers
 
-<font color="red">TODO</font>
+```diff
+- TODO
+```
 
 ```bash
 python scripts/part4_gbm_pipeline.py --config configs/gbm.yaml --models configs/models.yaml
