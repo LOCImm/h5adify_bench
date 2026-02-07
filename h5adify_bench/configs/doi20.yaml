@@ -1,5 +1,5 @@
 download:
-  out_dir: "data/doi20"
+  out_dir: "experiments/data/doi20"
   census_version: "stable"
   # Source H5ADs can be huge. Keep a small benchmark copy too:
   make_small_copy: true

@@ -51,11 +51,34 @@ def candidates_from_obs(obs_columns: List[str], field: str) -> List[str]:
             seen.add(x); out2.append(x)
     return out2
 
+def is_valid_column(adata, col_name: str) -> bool:
+    """
+    Returns True if the column has valid data (not all NaNs, not single value).
+    """
+    try:
+        # We need to access the data. Since adata is backed, this reads from disk.
+        series = adata.obs[col_name]
+        
+        # Check 1: Is it empty or all NaNs?
+        if series.isnull().all():
+            return False
+            
+        # Check 2: Does it have 0 or 1 unique values? (e.g. all "unknown")
+        # We allow 1 unique value ONLY if it's the 'species' or 'technology' 
+        # which might be constant for a dataset. But for batch/sex, we usually want variation.
+        # For safety in this generic function, we'll just check for emptiness.
+        if series.nunique() == 0:
+            return False
+            
+        return True
+    except Exception:
+        return False
+
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--manifest", default="data/doi20/manifest.json")
-    ap.add_argument("--out", default="gold/doi20_gold.json")
+    ap.add_argument("--manifest", default="experiments/data/doi20/manifest.json")
+    ap.add_argument("--out", default="experiments/gold/doi20_gold.json")
     ap.add_argument("--use-small", action="store_true", help="Prefer .small.h5ad when available")
     args = ap.parse_args()
 
@@ -84,8 +107,32 @@ def main():
         # gold keys for obs-mapped fields
         chosen = {}
         for f in gold["fields"]:
-            cand = candidates_from_obs(obs_cols, f)
-            chosen[f] = pick_best_gold_key(obs_cols, cand)
+            candidates = candidates_from_obs(obs_cols, f)
+            valid_candidates = []
+            for cand in candidates:
+                if is_valid_column(adata, cand):
+                    valid_candidates.append(cand)
+            
+            if not valid_candidates:
+                chosen[f] = None
+            else:
+                # If we have multiple valid options (e.g. 'batch' and 'batch_id'),
+                # we prefer the one that is NOT numeric if possible (usually more descriptive),
+                # or simply fall back to the shortest name if both are strings.
+                
+                # Sort by:
+                # 1. Is it an exact match to our synonym list? (Highest Priority)
+                # 2. Length (shorter is usually 'cleaner' ID, e.g. "sex" vs "donor_sex")
+                
+                exact_matches = FIELD_SYNONYMS.get(f, [])
+                def sort_score(c):
+                    is_exact = 0 if c in exact_matches else 1
+                    return (is_exact, len(c), c)
+                
+                # Pick the top one
+                chosen[f] = sorted(valid_candidates, key=sort_score)[0]
+
+            # chosen[f] = pick_best_gold_key(obs_cols, cand)
 
         # gold canonical species/technology from Census metadata
         species_canon = canonicalize_species_to_h5adify(it.get("organism", ""))

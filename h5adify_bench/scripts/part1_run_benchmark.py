@@ -38,8 +38,8 @@ def preview_canon(adata: Any, fields: List[str]) -> Dict[str, Any]:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", default="configs/models.yaml")
-    ap.add_argument("--gold", default="gold/doi20_gold.json")
-    ap.add_argument("--results", default="results/part1")
+    ap.add_argument("--gold", default="experiments/gold/doi20_gold.json")
+    ap.add_argument("--results", default="experiments/results/part1")
     ap.add_argument("--prompt-name", default="metadata_harmonize_v1_default")
     ap.add_argument("--use-llm", action="store_true")
     ap.add_argument("--no-sex-from-expression", action="store_true")
@@ -59,6 +59,8 @@ def main():
 
     out_root = ensure_dir(args.results)
     fields = list(DEFAULT_METADATA_FIELDS)
+    
+    if not args.use_llm: models = ["deterministic"]
 
     for model in models:
         model_dir = ensure_dir(out_root / model.replace(":", "_"))
@@ -90,6 +92,7 @@ def main():
             }
 
             try:
+                print("Trying adata harmonization...")
                 adata = ad.read_h5ad(h5ad_path)
                 adata2, report = harmonize_metadata(
                     adata,
@@ -101,6 +104,7 @@ def main():
                     ollama_model=model,
                     inplace=False,
                 )
+                print("Finished adata harmonization...")
                 rec["report"] = report
                 rec["canon_preview"] = preview_canon(adata2, fields)
 

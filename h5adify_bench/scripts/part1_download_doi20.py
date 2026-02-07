@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional
 import pandas as pd
 from tqdm import tqdm
 
-from common import ensure_dir, read_yaml, write_json, doi_slug, now_iso, humanize_exception
+from common import ensure_dir, read_yaml, read_json, write_json, doi_slug, now_iso, humanize_exception
 
 # external
 import cellxgene_census
@@ -47,6 +47,12 @@ def download_source_h5ad(dataset_id: str, out_path: Path, census_version: str = 
     if out_path.exists() and out_path.stat().st_size > 0:
         return
     cellxgene_census.download_source_h5ad(dataset_id, to_path=str(out_path), census_version=census_version)
+    
+def clear_in_progress(manifest, doi: str):
+    manifest["in_progress"] = [
+        x for x in manifest["in_progress"]
+        if x.get("doi") != doi
+    ]
 
 
 def main():
@@ -66,16 +72,41 @@ def main():
 
     print(f"[i] Loading Census datasets table ({census_version}) ...")
     df = load_datasets_table(census_version=census_version)
+    
+    manifest_path = out_dir / "manifest.json"
 
-    manifest: Dict[str, Any] = {
-        "created_at": now_iso(),
-        "census_version": census_version,
-        "items": [],
-        "missing": [],
-        "errors": [],
+    if manifest_path.exists():
+	    print(f"[i] Resuming from existing manifest: {manifest_path}")
+	    manifest = read_json(manifest_path)
+    else:
+	    manifest = {
+	        "created_at": now_iso(),
+	        "census_version": census_version,
+	        "items": [],
+	        "missing": [],
+	        "errors": [],
+	    }
+	    manifest.setdefault("in_progress", [])
+
+    processed_dois = {
+	    entry["doi"]
+	    for section in ("items", "missing", "errors")
+	    for entry in manifest.get(section, [])
+	    if "doi" in entry
     }
 
-    for doi in tqdm(cfg["dois"], desc="DOIs"):
+    pbar = tqdm(cfg["dois"], desc="DOIs")
+
+    for doi in pbar:
+        pbar.set_postfix_str(f"DOI: {doi}")
+        if doi in processed_dois: continue
+    	
+        manifest["in_progress"].append({
+            "doi": doi,
+            "started_at": now_iso(),
+        })
+        write_json(manifest_path, manifest)
+		
         try:
             row = find_best_dataset_for_doi(df, doi)
             if row is None:
@@ -120,6 +151,10 @@ def main():
 
         except Exception as e:
             manifest["errors"].append({"doi": doi, "stage": "download", "error": humanize_exception(e)})
+            
+        finally:
+	        clear_in_progress(manifest, doi)
+	        write_json(manifest_path, manifest)
 
     write_json(out_dir / "manifest.json", manifest)
     print(f"[ok] Wrote manifest: {out_dir/'manifest.json'}")
