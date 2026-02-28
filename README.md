@@ -2,8 +2,15 @@
 
 ## Abstract
 
+
 ```diff
-- Just an idea of quick abstract and possible article name. Probably include the reference to the main repository with the actual *h5adify* module.
+The rapid growth of public single-cell and spatial transcriptomics repositories has shifted the main bottleneck for atlas scale integration from data generation to metadata heterogeneity. Even when datasets are released in the AnnData H5AD format, inconsistent column naming, partial annotations, and mixed gene identifier conventions often prevent reproducible merging, downstream benchmarking, and reuse in foundation model training.
+
+We present `h5adify`, a neuro-symbolic toolkit that combines deterministic biological inference with local large language models to transform heterogeneous AnnData objects into a schema normalized representation that can be merged and audited at scale. \texttt{h5adify} implements (i) robust discovery of candidate metadata fields from `.obs` and `.uns`, (ii) gene identifier detection and harmonization, (iii) optional paper aware metadata extraction, and (iv) an explicit consensus layer that resolves conflicting evidence while logging uncertainty. We benchmark four open weight models deployed through Ollama (Gemma, Llama, Mistral and Qwen families) and show that small local models achieve high semantic accuracy for metadata field resolution, with low hallucination rates and practical compute requirements compatible with standard CPUs or consumer GPUs.
+
+Using a simulation suite that injects controlled annotation noise into single-cell and Visium like datasets, we demonstrate that metadata harmonization measurably improves integration benchmarking and reduces spurious batch effects in downstream analyses. Finally, by harmonizing and reanalyzing sex annotated glioblastoma single-cell and spatial transcriptomics datasets, we recover sex associated microenvironment patterns in tumor associated macrophage and microglia organization and identify cell type specific differences in copy number burden and inferred cell–cell communication programs that are not explained by differential expression alone.
+
+Together, `h5adify` provides a reproducible framework for evaluating LLM assisted biocuration and enables scalable, privacy preserving metadata harmonization for modern single-cell atlases and foundation model pipelines.
 ```
 
 This repository contains the **analysis pipelines, benchmarking frameworks, and reproducibility scripts** for the study:
